@@ -6,8 +6,8 @@ public class PlayerMove : MonoBehaviour
     public float speed = 5f;
 
     [Header("Limites")]
-    public float leftLimit = -13f;
-    public float rightLimit = 6f;
+    public float leftLimit = -5.0f;
+    public float rightLimit = 6.0f;
 
     private int direction = 1;
 
