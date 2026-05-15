@@ -16,18 +16,6 @@ public class Cube : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        // PERDER
-        if (!lost && collision.gameObject.CompareTag("Ground"))
-        {
-            lost = true;
-
-            GameManager.instance.CubeLost();
-
-            GameManager.instance.cubesLost++;
-
-            return;
-        }
-
         // PRIMER CUBO
         if (!score && GameManager.instance.cubesPlaced == 0 && collision.gameObject.CompareTag("Ground"))
         {
@@ -37,6 +25,17 @@ public class Cube : MonoBehaviour
 
             StartCoroutine(WaitUntilStable());
         }
+
+        // PERDER
+        else if (!lost && GameManager.instance.cubesPlaced > 0 && collision.gameObject.CompareTag("Ground"))
+        {
+            lost = true;
+
+            GameManager.instance.CubeLost();
+
+            return;
+        }
+
 
         // RESTO DE CUBOS
         else if (!score && GameManager.instance.cubesPlaced > 0 && collision.gameObject.CompareTag("Cube"))
@@ -52,7 +51,7 @@ public class Cube : MonoBehaviour
     private System.Collections.IEnumerator WaitUntilStable()
     {
         yield return new WaitForSeconds(1.5f);
-
+        
         GameManager.instance.SpawnNextCube();
     }
 
