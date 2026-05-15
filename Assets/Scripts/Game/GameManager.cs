@@ -68,7 +68,7 @@ public class GameManager : MonoBehaviour
 
         Debug.Log("Cubos perdidos: " + cubesLost);
 
-        if (cubesLost >= 3)
+        if (cubesLost > 3)
         {
             RestartGame();
         }
