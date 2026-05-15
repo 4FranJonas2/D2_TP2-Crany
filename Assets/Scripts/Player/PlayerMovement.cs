@@ -14,8 +14,13 @@ public class PlayerMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        PlayerMovemnt();
+    }
+
+    private void PlayerMovemnt()
+    {
         transform.position += Vector3.right * direction * speed * Time.deltaTime;
-    
+
         if (transform.position.x >= rightLimit)
         {
             direction = -1;
