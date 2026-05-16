@@ -13,12 +13,6 @@ public class PauseManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (settingsPanel.activeSelf)
-            {
-                settingsPanel.SetActive(false);
-                return;
-            }
-
             if (pause)
             {
                 Resume();
