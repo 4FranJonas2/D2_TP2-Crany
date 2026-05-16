@@ -13,6 +13,12 @@ public class PauseManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            if (settingsPanel.activeSelf)
+            {
+                settingsPanel.SetActive(false);
+                return;
+            }
+
             if (pause)
             {
                 Resume();
@@ -38,11 +44,19 @@ public class PauseManager : MonoBehaviour
         pause = false;
     }
 
-    public void Settings()
+    public void OpenSettings()
     {
         settingsPanel.SetActive(true);
+
+        pauseMenu.SetActive(false);
     }
 
+    public void CloseSettings()
+    {
+        settingsPanel.SetActive(false);
+
+        pauseMenu.SetActive(true);
+    }
     public void BackToMainMenu()
     {
         Time.timeScale = 1f;
