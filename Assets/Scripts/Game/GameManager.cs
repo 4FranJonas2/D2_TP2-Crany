@@ -1,9 +1,17 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
+
+    [Header("UI")]
+    [SerializeField] private TMP_Text cubesPlacedText;
+    [SerializeField] private TMP_Text cubesLostText;
+    [SerializeField] private TMP_Text timeText;
+
+    private float gameTime = 0f;
 
     [SerializeField] private GameObject cubePrefab;
     [SerializeField] private Transform spawnPoint;
@@ -11,7 +19,7 @@ public class GameManager : MonoBehaviour
     private GameObject currentCube;
 
     public int cubesPlaced = 0;
-    private int cubesLost = 0;  
+    private int cubesLost = 0;
 
     private bool cubeDropped = false;
 
@@ -27,9 +35,11 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
+        UiTimeLogic();
+
         if (currentCube == null) return;
 
-        if(!cubeDropped)
+        if (!cubeDropped)
         {
             currentCube.transform.position = spawnPoint.position;
 
@@ -38,6 +48,22 @@ public class GameManager : MonoBehaviour
                 DropCube();
             }
         }
+    }
+
+    private void UiTimeLogic()
+    {
+        gameTime += Time.deltaTime;
+
+        UpdateUI();
+    }
+
+    private void UpdateUI()
+    {
+        cubesPlacedText.text = "Cubos colocados: " + cubesPlaced;
+
+        cubesLostText.text = "Cubos perdidos: " + cubesLost;
+
+        timeText.text = "Tiempo: " + Mathf.FloorToInt(gameTime) + "s";
     }
 
     public void SpawnNextCube()
@@ -51,7 +77,7 @@ public class GameManager : MonoBehaviour
         rb.useGravity = false;
         rb.isKinematic = true;
     }
-    
+
     private void DropCube()
     {
         cubeDropped = true;
