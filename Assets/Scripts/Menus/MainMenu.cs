@@ -1,8 +1,11 @@
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
+    [SerializeField] private GameObject settingsPanel;
+
     public void StartGame()
     {
         SceneManager.LoadScene("GameScene");
@@ -15,7 +18,7 @@ public class MainMenu : MonoBehaviour
 
     public void OpenSettings()
     {
-        SceneManager.LoadScene("Settings");
+        settingsPanel.SetActive(true);
     }
 
     public void OpenCredits()
