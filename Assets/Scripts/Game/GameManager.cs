@@ -125,7 +125,7 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0f;
     }
 
-    private void ReplayGame()
+    public void ReplayGame()
     {
         Time.timeScale = 1f;
 
