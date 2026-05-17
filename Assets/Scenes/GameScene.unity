@@ -1215,7 +1215,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &199273955
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1501,7 +1501,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 308937808}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1802299139}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: ReplayGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &308937808
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2550,7 +2562,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1039098501}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1802299139}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: BackToMainMenu
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1039098501
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4339,9 +4363,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1138ea7835d1c14887159fa1f490906, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
-  gameOverPanel: {fileID: 0}
-  finalTimeText: {fileID: 0}
-  finalScoreText: {fileID: 0}
+  gameOverPanel: {fileID: 199273954}
+  finalTimeText: {fileID: 2013040638}
+  finalScoreText: {fileID: 2081267729}
   cubesPlacedText: {fileID: 1864123486}
   cubesLostText: {fileID: 1828746732}
   timeText: {fileID: 104117977}
@@ -6107,7 +6131,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2143502478}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1802299139}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: QuitGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2143502478
 MonoBehaviour:
   m_ObjectHideFlags: 0
