@@ -6,6 +6,11 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
+    [Header("Game Over")]
+    [SerializeField] private GameObject gameOverPanel;
+    [SerializeField] private TMP_Text finalTimeText;
+    [SerializeField] private TMP_Text finalScoreText;
+
     [Header("UI")]
     [SerializeField] private TMP_Text cubesPlacedText;
     [SerializeField] private TMP_Text cubesLostText;
@@ -96,7 +101,7 @@ public class GameManager : MonoBehaviour
 
         if (cubesLost > 3)
         {
-            RestartGame();
+            GameOver();
         }
         else
         {
@@ -107,5 +112,37 @@ public class GameManager : MonoBehaviour
     private void RestartGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    private void GameOver()
+    {
+        gameOverPanel.SetActive(true);
+        
+        finalTimeText.text = "Tiempo final: " + Mathf.FloorToInt(gameTime) + "s";
+        
+        finalScoreText.text = "Puntaje final: " + cubesPlaced;
+
+        Time.timeScale = 0f;
+    }
+
+    private void ReplayGame()
+    {
+        Time.timeScale = 1f;
+
+        RestartGame();
+    }
+
+    public void BackToMainMenu()
+    {
+        Time.timeScale = 1f;
+
+        SceneManager.LoadScene("MainMenu");
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+
+        Debug.Log("Salir del juego");
     }
 }
