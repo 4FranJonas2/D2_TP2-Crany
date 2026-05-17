@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Game Over")]
     [SerializeField] private GameObject gameOverPanel;
+    [SerializeField] private GameObject gameUI;
     [SerializeField] private TMP_Text finalTimeText;
     [SerializeField] private TMP_Text finalScoreText;
 
@@ -99,8 +100,9 @@ public class GameManager : MonoBehaviour
 
         Debug.Log("Cubos perdidos: " + cubesLost);
 
-        if (cubesLost > 3)
+        if (cubesLost >= 3)
         {
+            gameUI.SetActive(false);
             GameOver();
         }
         else
