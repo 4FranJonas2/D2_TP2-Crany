@@ -1,10 +1,13 @@
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.Audio;
 using UnityEngine.UI;
 
 public class SettingsManager : MonoBehaviour
 {
-    [Header("UI")]
+    [SerializeField] private AudioMixer audioMixer;
+
+    [Header("UI Settings")]
     [SerializeField] private Slider musicSlider;
     [SerializeField] private Slider sfxSlider;
 
@@ -24,7 +27,9 @@ public class SettingsManager : MonoBehaviour
     {
         musicVolume = volume;
 
-        AudioListener.volume = musicVolume;
+        musicVolume = Mathf.Clamp(musicVolume, 0.0001f, 1f);
+
+        audioMixer.SetFloat("MusicVolume", Mathf.Log10(musicVolume) * 20);
 
         PlayerPrefs.SetFloat("MusicVolume", musicVolume);
         PlayerPrefs.Save();
@@ -33,6 +38,11 @@ public class SettingsManager : MonoBehaviour
     public void SetSFXVolume(float volume)
     {
         sfxVolume = volume;
+        
+        sfxVolume = Mathf.Clamp(sfxVolume, 0.0001f, 1f);
+
+        audioMixer.SetFloat("SFXVolume", Mathf.Log10(sfxVolume) * 20);
+        audioMixer.SetFloat("UIVolume", Mathf.Log10(sfxVolume) * 20);
 
         PlayerPrefs.SetFloat("SFXVolume", sfxVolume);
         PlayerPrefs.Save();
@@ -41,11 +51,15 @@ public class SettingsManager : MonoBehaviour
     private void LoadSettings()
     {
         musicVolume = PlayerPrefs.GetFloat("MusicVolume", 1.0f);
+
         sfxVolume = PlayerPrefs.GetFloat("SFXVolume", 1.0f);
+
         musicSlider.value = musicVolume;
+
         sfxSlider.value = sfxVolume;
 
-        AudioListener.volume = musicVolume;
+        SetMusicVolume(musicVolume);
+        SetSFXVolume(sfxVolume);
     }
 
     public float GetSFXVolume()
