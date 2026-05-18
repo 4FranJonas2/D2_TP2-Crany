@@ -6,6 +6,9 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
+    [SerializeField] private LevelManager[] levels;
+    [SerializeField] private PlayerMove playerSpeed;
+
     [Header("Game Over")]
     [SerializeField] private GameObject gameOverPanel;
     [SerializeField] private GameObject gameUI;
@@ -17,13 +20,16 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TMP_Text cubesLostText;
     [SerializeField] private TMP_Text timeText;
 
-    private float gameTime = 0f;
 
     [SerializeField] private GameObject cubePrefab;
     [SerializeField] private Transform spawnPoint;
 
     private GameObject currentCube;
 
+    private int currentLevel = 0;
+    private int maxLives;
+
+    private float gameTime = 0f;
     public int cubesPlaced = 0;
     private int cubesLost = 0;
 
@@ -36,6 +42,8 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        LoadLevel();
+
         SpawnNextCube();
     }
 
@@ -56,6 +64,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    //UI logic
     private void UiTimeLogic()
     {
         gameTime += Time.deltaTime;
@@ -72,6 +81,7 @@ public class GameManager : MonoBehaviour
         timeText.text = "Tiempo: " + Mathf.FloorToInt(gameTime) + "s";
     }
 
+    //Cube logic
     public void SpawnNextCube()
     {
         cubeDropped = false;
@@ -100,7 +110,7 @@ public class GameManager : MonoBehaviour
 
         Debug.Log("Cubos perdidos: " + cubesLost);
 
-        if (cubesLost >= 3)
+        if (cubesLost >= maxLives)
         {
             gameUI.SetActive(false);
             GameOver();
@@ -108,9 +118,11 @@ public class GameManager : MonoBehaviour
         else
         {
             SpawnNextCube();
+            CheckLevelComplete();
         }
     }
 
+    //Buttons logic
     private void RestartGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
@@ -119,9 +131,9 @@ public class GameManager : MonoBehaviour
     private void GameOver()
     {
         gameOverPanel.SetActive(true);
-        
+
         finalTimeText.text = "Tiempo final: " + Mathf.FloorToInt(gameTime) + "s";
-        
+
         finalScoreText.text = "Puntaje final: " + cubesPlaced;
 
         Time.timeScale = 0f;
@@ -146,5 +158,57 @@ public class GameManager : MonoBehaviour
         Application.Quit();
 
         Debug.Log("Salir del juego");
+    }
+
+    //levelsSTuff
+    private void LoadLevel()
+    {
+        cubesLost = 0;
+        cubesPlaced = 0;
+
+        LevelManager level = levels[currentLevel];
+
+        maxLives = level.maxLives;
+
+        playerSpeed.SetLevelSpeed(level.playerSpeed);
+
+        LevelManager nextLevel = levels[currentLevel];
+    }
+
+    public void CheckLevelComplete()
+    {
+        LevelManager level = levels[currentLevel];
+
+        if ((cubesPlaced >= level.cubesToWin))
+        {
+            NextLevel();
+        }
+    }
+
+    private void ClearLevel()
+    {
+        Cube[] cubes = FindObjectsByType<Cube>(FindObjectsSortMode.None);
+
+        foreach (Cube cube in cubes)
+        {
+            Destroy(cube.gameObject);
+        }
+    }
+
+    private void NextLevel()
+    {
+        currentLevel++;
+        if (currentLevel >= levels.Length)
+        {
+           currentLevel = levels.Length - 1;
+
+            Debug.Log("Game Complete!!");
+
+            return;
+        }
+
+        LoadLevel();
+
+        SpawnNextCube();
     }
 }
