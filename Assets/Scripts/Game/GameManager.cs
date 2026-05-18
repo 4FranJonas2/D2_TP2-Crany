@@ -14,10 +14,13 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject gameUI;
     [SerializeField] private TMP_Text finalTimeText;
     [SerializeField] private TMP_Text finalScoreText;
+    [SerializeField] private TMP_Text finalLevelAchieved;
 
     [Header("UI")]
     [SerializeField] private TMP_Text cubesPlacedText;
+    [SerializeField] private TMP_Text cubesToWinText;
     [SerializeField] private TMP_Text cubesLostText;
+    [SerializeField] private TMP_Text levelText;
     [SerializeField] private TMP_Text timeText;
 
 
@@ -64,6 +67,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
+   
     //UI logic
     private void UiTimeLogic()
     {
@@ -74,13 +78,18 @@ public class GameManager : MonoBehaviour
 
     private void UpdateUI()
     {
-        cubesPlacedText.text = "Cubos colocados: " + cubesPlaced;
+        cubesPlacedText.text = "Cubes placed: " + cubesPlaced;
 
-        cubesLostText.text = "Cubos perdidos: " + cubesLost;
+        cubesToWinText.text = "Cubes to win: " + levels[currentLevel].cubesToWin;
 
-        timeText.text = "Tiempo: " + Mathf.FloorToInt(gameTime) + "s";
+        cubesLostText.text = "Cubes lost: " + cubesLost;
+
+        levelText.text = "Level: " + (currentLevel + 1);
+
+        timeText.text = "Time: " + Mathf.FloorToInt(gameTime) + "s";
     }
 
+    
     //Cube logic
     public void SpawnNextCube()
     {
@@ -122,6 +131,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    
     //Buttons logic
     private void RestartGame()
     {
@@ -132,9 +142,11 @@ public class GameManager : MonoBehaviour
     {
         gameOverPanel.SetActive(true);
 
-        finalTimeText.text = "Tiempo final: " + Mathf.FloorToInt(gameTime) + "s";
+        finalScoreText.text = "Final score: " + cubesPlaced;
 
-        finalScoreText.text = "Puntaje final: " + cubesPlaced;
+        finalTimeText.text = "Time played: " + Mathf.FloorToInt(gameTime) + "s";
+
+        finalLevelAchieved.text = "Level achieved: " + (currentLevel + 1);
 
         Time.timeScale = 0f;
     }
@@ -160,6 +172,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("Salir del juego");
     }
 
+    
     //levelsSTuff
     private void LoadLevel()
     {
