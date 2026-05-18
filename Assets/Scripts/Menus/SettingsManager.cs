@@ -41,7 +41,7 @@ public class SettingsManager : MonoBehaviour
         
         sfxVolume = Mathf.Clamp(sfxVolume, 0.0001f, 1f);
 
-        audioMixer.SetFloat("sfxVolume", Mathf.Log10(sfxVolume) * 20);
+        audioMixer.SetFloat("SFXVolume", Mathf.Log10(sfxVolume) * 20);
         audioMixer.SetFloat("UIVolume", Mathf.Log10(sfxVolume) * 20);
 
         PlayerPrefs.SetFloat("SFXVolume", sfxVolume);
