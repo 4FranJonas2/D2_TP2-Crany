@@ -16,6 +16,12 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TMP_Text finalScoreText;
     [SerializeField] private TMP_Text finalLevelAchieved;
 
+    [Header("Win Menu")]
+    [SerializeField] private GameObject winPanel;
+    [SerializeField] private TMP_Text winTimeText;
+    [SerializeField] private TMP_Text winScoreText;
+    [SerializeField] private TMP_Text winLevelAchieved;
+
     [Header("UI")]
     [SerializeField] private TMP_Text cubesPlacedText;
     [SerializeField] private TMP_Text cubesToWinText;
@@ -52,7 +58,7 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        UiTimeLogic();
+        UpdateUI();
 
         if (currentCube == null) return;
 
@@ -67,13 +73,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
-   
-    //UI logic
-    private void UiTimeLogic()
+    private string FormatTime(float time)
     {
-        gameTime += Time.deltaTime;
-
-        UpdateUI();
+        int minutes = Mathf.FloorToInt(time / 60f);
+        int seconds = Mathf.FloorToInt(time % 60f);
+        return string.Format("{0:00}:{1:00}", minutes, seconds);
     }
 
     private void UpdateUI()
@@ -86,7 +90,7 @@ public class GameManager : MonoBehaviour
 
         levelText.text = "Level: " + (currentLevel + 1);
 
-        timeText.text = "Time: " + Mathf.FloorToInt(gameTime) + "s";
+        timeText.text = "Time: " + FormatTime(gameTime) + "s";
     }
 
     
@@ -131,29 +135,57 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    
-    //Buttons logic
-    private void RestartGame()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-    }
 
+    //Win/Lose panels
     private void GameOver()
     {
         gameOverPanel.SetActive(true);
 
         finalScoreText.text = "Final score: " + cubesPlaced;
 
-        finalTimeText.text = "Time played: " + Mathf.FloorToInt(gameTime) + "s";
+        finalTimeText.text = "Time played: " + FormatTime(gameTime) + "s";
 
         finalLevelAchieved.text = "Level achieved: " + (currentLevel + 1);
 
         Time.timeScale = 0f;
     }
+    
+    private void WinGame()
+    {
+        winPanel.SetActive(true);
+
+        winScoreText.text = "Final score: " + cubesPlaced;
+
+        winTimeText.text = "Time played: " + FormatTime(gameTime) + "s";
+
+        winLevelAchieved.text = "Level achieved: " + (currentLevel + 1);
+
+        Time.timeScale = 0f;
+    }
+
+    //Buttons logic
+    public void RestartGame()
+    {
+        cubesPlaced = 0;
+        cubesLost = 0;
+        gameTime = 0f;
+
+        winPanel.SetActive(false);
+        gameOverPanel.SetActive(false);
+        gameUI.SetActive(true);
+
+        ClearLevel();
+
+        LoadLevel();
+
+        SpawnNextCube();
+    }
 
     public void ReplayGame()
     {
         Time.timeScale = 1f;
+
+        currentLevel = 0;
 
         RestartGame();
     }
@@ -192,9 +224,9 @@ public class GameManager : MonoBehaviour
     {
         LevelManager level = levels[currentLevel];
 
-        if ((cubesPlaced >= level.cubesToWin))
+        if ((cubesPlaced == level.cubesToWin))
         {
-            NextLevel();
+            WinGame();
         }
     }
 
@@ -208,9 +240,12 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void NextLevel()
+    public void NextLevel()
     {
+        Time.timeScale = 1f;
+
         currentLevel++;
+
         if (currentLevel >= levels.Length)
         {
            currentLevel = levels.Length - 1;
@@ -220,8 +255,6 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        LoadLevel();
-
-        SpawnNextCube();
+        RestartGame();
     }
 }

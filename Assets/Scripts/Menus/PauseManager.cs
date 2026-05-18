@@ -38,6 +38,14 @@ public class PauseManager : MonoBehaviour
         pause = false;
     }
 
+    public void RestartLevel()
+    {
+        pauseMenu.SetActive(false);
+        Time.timeScale = 1f;
+        //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        GameManager.instance.RestartGame();
+    }
+
     public void OpenSettings()
     {
         settingsPanel.SetActive(true);
