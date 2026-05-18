@@ -44,6 +44,8 @@ public class Cube : MonoBehaviour
 
             GameManager.instance.cubesPlaced++;
 
+            GameManager.instance.CheckLevelComplete();
+
             StartCoroutine(WaitUntilStable());
         }
     }
