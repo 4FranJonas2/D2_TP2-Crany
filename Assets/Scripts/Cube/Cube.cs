@@ -21,9 +21,9 @@ public class Cube : MonoBehaviour
         {
             score = true;
 
-            GameManager.instance.cubesPlaced++;
-
             PlaySFXSound();
+
+            GameManager.instance.AddPlacedCube();
 
             StartCoroutine(WaitUntilStable());
         }
@@ -33,7 +33,7 @@ public class Cube : MonoBehaviour
         {
             lost = true;
 
-            GameManager.instance.CubeLost();
+            GameManager.instance.AddLostCube();
 
             PlaySFXSound();
 
@@ -46,11 +46,9 @@ public class Cube : MonoBehaviour
         {
             score = true;
 
-            GameManager.instance.cubesPlaced++;
-
-            GameManager.instance.CheckLevelComplete();
-
             PlaySFXSound();
+
+            GameManager.instance.AddPlacedCube();
 
             StartCoroutine(WaitUntilStable());
         }

@@ -1,10 +1,17 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
+using System;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
+
+    public static event Action<int> OnCubesPlacedChanged;
+    public static event Action<int> OnCubesLostChanged;
+    public static event Action<int> OnCubesToWinChanged;
+    public static event Action<float> OnTimeChanged;
+    public static event Action<int> OnLevelChanged;
 
     [SerializeField] private LevelManager[] levels;
     [SerializeField] private PlayerMove playerSpeed;
@@ -63,7 +70,9 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        UpdateUI();
+        AddTime(Time.deltaTime);
+        SetLevel(currentLevel);
+        SetCubesToWin(levels[currentLevel].cubesToWin);
 
         if (currentCube == null) return;
 
@@ -79,27 +88,51 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private string FormatTime(float time)
+    //HUD Management
+    public void AddPlacedCube()
     {
-        int minutes = Mathf.FloorToInt(time / 60f);
-        int seconds = Mathf.FloorToInt(time % 60f);
-        return string.Format("{0:00}:{1:00}", minutes, seconds);
+        cubesPlaced++;
+
+        OnCubesPlacedChanged?.Invoke(cubesPlaced);
+
+        CheckLevelComplete();
     }
 
-    private void UpdateUI()
+    public void AddLostCube()
     {
-        cubesPlacedText.text = "Cubes placed: " + cubesPlaced;
-
-        cubesToWinText.text = "Cubes to win: " + levels[currentLevel].cubesToWin;
-
-        cubesLostText.text = "Cubes lost: " + cubesLost;
-
-        levelText.text = "Level: " + (currentLevel + 1);
-
-        timeText.text = "Time: " + FormatTime(gameTime) + "s";
+        cubesLost++;
+        OnCubesLostChanged?.Invoke(cubesLost);
+        if (cubesLost >= maxLives)
+        {
+            gameUI.SetActive(false);
+            GameOver();
+        }
+        else
+        {
+            SpawnNextCube();
+            CheckLevelComplete();
+        }
     }
 
-    
+    public void AddTime(float time)
+    {
+        gameTime += time;
+        OnTimeChanged?.Invoke(gameTime);
+
+        CheckLevelComplete();
+    }
+
+    public void SetLevel(int level)
+    {
+        currentLevel = level;
+        OnLevelChanged?.Invoke(currentLevel);
+    }
+
+    public void SetCubesToWin(int cubesToWin)
+    {
+        OnCubesToWinChanged?.Invoke(cubesToWin);
+    }
+
     //Cube logic
     public void SpawnNextCube()
     {
@@ -123,23 +156,23 @@ public class GameManager : MonoBehaviour
         rb.useGravity = true;
     }
 
-    public void CubeLost()
-    {
-        cubesLost++;
+    //public void CubeLost()
+    //{
+    //    cubesLost++;
 
-        Debug.Log("Cubos perdidos: " + cubesLost);
+    //    Debug.Log("Cubos perdidos: " + cubesLost);
 
-        if (cubesLost >= maxLives)
-        {
-            gameUI.SetActive(false);
-            GameOver();
-        }
-        else
-        {
-            SpawnNextCube();
-            CheckLevelComplete();
-        }
-    }
+    //    if (cubesLost >= maxLives)
+    //    {
+    //        gameUI.SetActive(false);
+    //        GameOver();
+    //    }
+    //    else
+    //    {
+    //        SpawnNextCube();
+    //        CheckLevelComplete();
+    //    }
+    //}
 
 
     //Win/Lose panels
@@ -149,20 +182,20 @@ public class GameManager : MonoBehaviour
 
         finalScoreText.text = "Final score: " + cubesPlaced;
 
-        finalTimeText.text = "Time played: " + FormatTime(gameTime) + "s";
+        finalTimeText.text = "Time played: " + gameTime + "s";
 
         finalLevelAchieved.text = "Level achieved: " + (currentLevel + 1);
 
         Time.timeScale = 0f;
     }
-    
+
     private void WinGame()
     {
         winPanel.SetActive(true);
 
         winScoreText.text = "Final score: " + cubesPlaced;
 
-        winTimeText.text = "Time played: " + FormatTime(gameTime) + "s";
+        winTimeText.text = "Time played: " + gameTime + "s";
 
         winLevelAchieved.text = "Level achieved: " + (currentLevel + 1);
 
@@ -210,7 +243,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("Salir del juego");
     }
 
-    
+
     //levelsSTuff
     private void LoadLevel()
     {
@@ -254,7 +287,7 @@ public class GameManager : MonoBehaviour
 
         if (currentLevel >= levels.Length)
         {
-           currentLevel = levels.Length - 1;
+            currentLevel = levels.Length - 1;
 
             Debug.Log("Game Complete!!");
 

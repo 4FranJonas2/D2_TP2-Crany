@@ -5035,6 +5035,7 @@ GameObject:
   - component: {fileID: 1478987786}
   - component: {fileID: 1478987788}
   - component: {fileID: 1478987787}
+  - component: {fileID: 1478987789}
   m_Layer: 5
   m_Name: UI
   m_TagString: Untagged
@@ -5055,8 +5056,8 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1864123485}
-  - {fileID: 23801079}
   - {fileID: 1828746731}
+  - {fileID: 23801079}
   - {fileID: 1415338777}
   - {fileID: 104117976}
   - {fileID: 674598108}
@@ -5105,6 +5106,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1478987785}
   m_CullTransparentMesh: 1
+--- !u!114 &1478987789
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1478987785}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c90349093df498a44ae8a63c95624142, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HUDManager
+  cubesPlacedText: {fileID: 1864123486}
+  cubesLostText: {fileID: 1828746732}
+  cubesToWinText: {fileID: 23801080}
+  levelText: {fileID: 1415338778}
+  timerText: {fileID: 104117977}
 --- !u!1 &1556017177
 GameObject:
   m_ObjectHideFlags: 0
