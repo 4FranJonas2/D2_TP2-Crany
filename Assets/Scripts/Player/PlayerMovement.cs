@@ -3,7 +3,7 @@ using UnityEngine;
 public class PlayerMove : MonoBehaviour
 {
     [Header("Movimiento")]
-    public float speed = 5f;
+    public float levelSpeed;
 
     [Header("Limites")]
     public float leftLimit = -5.0f;
@@ -19,7 +19,7 @@ public class PlayerMove : MonoBehaviour
 
     private void PlayerMovemnt()
     {
-        transform.position += Vector3.right * direction * speed * Time.deltaTime;
+        transform.position += Vector3.right * direction * levelSpeed * Time.deltaTime;
 
         if (transform.position.x >= rightLimit)
         {
@@ -29,5 +29,10 @@ public class PlayerMove : MonoBehaviour
         {
             direction = 1;
         }
+    }
+
+    public void SetLevelSpeed(float newSpeed)
+    {
+        levelSpeed = newSpeed;
     }
 }
