@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Level 2
   m_EditorClassIdentifier: Assembly-CSharp::LevelManager
   level: 0
-  maxLives: 3
+  maxLives: 2
   cubesToWin: 10
-  playerSpeed: 5
+  playerSpeed: 8

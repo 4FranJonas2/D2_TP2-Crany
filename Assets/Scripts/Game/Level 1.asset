@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd0f8a2dd7c879d4d9f6853bd979350d, type: 3}
   m_Name: Level 1
   m_EditorClassIdentifier: Assembly-CSharp::LevelManager
-  level: 0
+  level: 1
   maxLives: 3
-  cubesToWin: 10
-  playerSpeed: 5
+  cubesToWin: 5
+  playerSpeed: 4
