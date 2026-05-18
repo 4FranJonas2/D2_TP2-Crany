@@ -16,6 +16,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] private LevelManager[] levels;
     [SerializeField] private PlayerMove playerSpeed;
 
+    [Header("Tower Progression")]
+    [SerializeField] private Transform gamePlayBase;
+    [SerializeField] private float cubeHeight;
+    [SerializeField] private int cubesBeforeBaseMove;
+
     [Header("Game Over")]
     [SerializeField] private GameObject gameOverPanel;
     [SerializeField] private GameObject gameUI;
@@ -41,11 +46,12 @@ public class GameManager : MonoBehaviour
     [SerializeField] public AudioClip dropSFX;
     [SerializeField] public AudioClip hitCubeSFX;
 
-
     [SerializeField] private GameObject cubePrefab;
     [SerializeField] private Transform spawnPoint;
 
     private GameObject currentCube;
+    
+    private Vector3 initialBasePosition;
 
     private int currentLevel = 0;
     private int maxLives;
@@ -63,6 +69,8 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        initialBasePosition = gamePlayBase.position;
+
         LoadLevel();
 
         SpawnNextCube();
@@ -88,10 +96,27 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    //Tower progression logic
+    private void CheckTowerHeight()
+    {
+        if(cubesPlaced <= cubesBeforeBaseMove) return;
+
+        float targetHeight = (cubesPlaced - cubesBeforeBaseMove) * cubeHeight;
+
+        gamePlayBase.position = initialBasePosition  + Vector3.up * targetHeight;
+    }
+
+    private void ResetTowerHeight()
+    {
+        gamePlayBase.position = initialBasePosition;
+    }   
+
     //HUD Management
     public void AddPlacedCube()
     {
         cubesPlaced++;
+
+        CheckTowerHeight();
 
         OnCubesPlacedChanged?.Invoke(cubesPlaced);
 
@@ -156,25 +181,6 @@ public class GameManager : MonoBehaviour
         rb.useGravity = true;
     }
 
-    //public void CubeLost()
-    //{
-    //    cubesLost++;
-
-    //    Debug.Log("Cubos perdidos: " + cubesLost);
-
-    //    if (cubesLost >= maxLives)
-    //    {
-    //        gameUI.SetActive(false);
-    //        GameOver();
-    //    }
-    //    else
-    //    {
-    //        SpawnNextCube();
-    //        CheckLevelComplete();
-    //    }
-    //}
-
-
     //Win/Lose panels
     private void GameOver()
     {
@@ -208,10 +214,12 @@ public class GameManager : MonoBehaviour
         cubesPlaced = 0;
         cubesLost = 0;
         gameTime = 0f;
-
+        
         winPanel.SetActive(false);
         gameOverPanel.SetActive(false);
         gameUI.SetActive(true);
+
+        ResetTowerHeight();
 
         ClearLevel();
 
