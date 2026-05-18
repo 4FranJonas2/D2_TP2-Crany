@@ -1344,7 +1344,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1478987786}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 517406609}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1822,12 +1822,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -5}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.24436, y: -4.96551, z: -9.56763}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 517406609}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &330585547
 MonoBehaviour:
@@ -2384,6 +2384,40 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::UIButtonAudio
   hoverSound: {fileID: 8300000, guid: b573f0186ca64644aad97cc6ffc8da6f, type: 3}
   clickSound: {fileID: 8300000, guid: a12aba29530973e4086c46fe37022737, type: 3}
+--- !u!1 &517406608
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 517406609}
+  m_Layer: 0
+  m_Name: GamePlayBase
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &517406609
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 517406608}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.24436, y: 4.96551, z: 4.56763}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 330585546}
+  - {fileID: 157797735}
+  - {fileID: 1171871198}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &597503902
 GameObject:
   m_ObjectHideFlags: 0
@@ -4051,13 +4085,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1171871197}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 7.369, z: 0}
+  m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: -0.24436, y: 2.40349, z: -4.56763}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 35708836}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 517406609}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!1 &1186143237
 GameObject:
@@ -6320,6 +6354,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: be796ac4c0e25264c9cbcb5f149b8627, type: 2}
   - {fileID: 11400000, guid: e0804527fbc07d4439fafd01d660426e, type: 2}
   playerSpeed: {fileID: 38235445}
+  gamePlayBase: {fileID: 517406609}
+  cubeHeight: 1.5
+  cubesBeforeBaseMove: 3
   gameOverPanel: {fileID: 199273954}
   gameUI: {fileID: 1478987785}
   finalTimeText: {fileID: 2013040638}
@@ -8585,13 +8622,11 @@ MonoBehaviour:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 330585546}
   - {fileID: 1648525054}
   - {fileID: 410087041}
   - {fileID: 832575519}
-  - {fileID: 1171871198}
+  - {fileID: 517406609}
   - {fileID: 1268007182}
-  - {fileID: 157797735}
   - {fileID: 1010365860}
   - {fileID: 1802299140}
   - {fileID: 1456386905}
