@@ -11,24 +11,24 @@ public class UIAudioManager : MonoBehaviour
 
     private void Awake()
     {
-        if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
+        if (instance != null && instance != this)
         {
             Destroy(gameObject);
+            return;
         }
-    }
 
-    public void PlayButtonClick()
-    {
-        audioSource.PlayOneShot(buttonClickClip);
+        instance = this;
+
+        DontDestroyOnLoad(gameObject);
     }
 
     public void PlayHoverButton()
     {
         audioSource.PlayOneShot(hoverButtonClip);
+    }
+
+    public void PlayButtonClick()
+    {
+        audioSource.PlayOneShot(buttonClickClip);
     }
 }

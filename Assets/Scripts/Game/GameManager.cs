@@ -121,11 +121,6 @@ public class GameManager : MonoBehaviour
 
         rb.isKinematic = false;
         rb.useGravity = true;
-
-        //if (sfxSource != null && dropSFX != null)
-        //{
-        //    sfxSource.PlayOneShot(dropSFX);
-        //}
     }
 
     public void CubeLost()
@@ -174,7 +169,7 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0f;
     }
 
-    //Buttons logic
+    //Buttons logic for Pause/Win/Lose panels
     public void RestartGame()
     {
         cubesPlaced = 0;
