@@ -23,6 +23,8 @@ public class Cube : MonoBehaviour
 
             GameManager.instance.cubesPlaced++;
 
+            PlaySFXSound();
+
             StartCoroutine(WaitUntilStable());
         }
 
@@ -32,6 +34,8 @@ public class Cube : MonoBehaviour
             lost = true;
 
             GameManager.instance.CubeLost();
+
+            PlaySFXSound();
 
             return;
         }
@@ -46,6 +50,8 @@ public class Cube : MonoBehaviour
 
             GameManager.instance.CheckLevelComplete();
 
+            PlaySFXSound();
+
             StartCoroutine(WaitUntilStable());
         }
     }
@@ -53,16 +59,15 @@ public class Cube : MonoBehaviour
     private System.Collections.IEnumerator WaitUntilStable()
     {
         yield return new WaitForSeconds(1.5f);
-        
+
         GameManager.instance.SpawnNextCube();
     }
 
-    //private void CubeSecuence()
-    //{
-    //    landed = true;
-
-    //    GameManager.instance.cubesPlaced++;
-
-    //    StartCoroutine(WaitUntilStable());
-    //}
+    private void PlaySFXSound()
+    {
+        if (GameManager.instance.sfxSource != null && GameManager.instance.dropSFX != null)
+        {
+            GameManager.instance.sfxSource.PlayOneShot(GameManager.instance.hitCubeSFX);
+        }
+    }
 }

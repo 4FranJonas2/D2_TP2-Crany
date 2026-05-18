@@ -29,6 +29,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TMP_Text levelText;
     [SerializeField] private TMP_Text timeText;
 
+    [Header("SFX")]
+    [SerializeField] public AudioSource sfxSource;
+    [SerializeField] public AudioClip dropSFX;
+    [SerializeField] public AudioClip hitCubeSFX;
+
 
     [SerializeField] private GameObject cubePrefab;
     [SerializeField] private Transform spawnPoint;
@@ -68,6 +73,7 @@ public class GameManager : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.Space))
             {
+                sfxSource.PlayOneShot(dropSFX);
                 DropCube();
             }
         }
@@ -115,6 +121,11 @@ public class GameManager : MonoBehaviour
 
         rb.isKinematic = false;
         rb.useGravity = true;
+
+        //if (sfxSource != null && dropSFX != null)
+        //{
+        //    sfxSource.PlayOneShot(dropSFX);
+        //}
     }
 
     public void CubeLost()
