@@ -8,6 +8,7 @@ public class Cube : MonoBehaviour
 
     private bool score = false;
     private bool lost = false;
+    private bool finalized = false;
 
     private void Awake()
     {
@@ -23,13 +24,11 @@ public class Cube : MonoBehaviour
 
             PlaySFXSound();
 
-            GameManager.instance.AddPlacedCube();
-
             StartCoroutine(WaitUntilStable());
         }
 
         // PERDER
-        else if (!lost && GameManager.instance.cubesPlaced > 0 && collision.gameObject.CompareTag("Ground"))
+        else if (!lost && !finalized && GameManager.instance.cubesPlaced > 0 && collision.gameObject.CompareTag("Ground"))
         {
             lost = true;
 
@@ -48,8 +47,6 @@ public class Cube : MonoBehaviour
 
             PlaySFXSound();
 
-            GameManager.instance.AddPlacedCube();
-
             StartCoroutine(WaitUntilStable());
         }
     }
@@ -58,7 +55,12 @@ public class Cube : MonoBehaviour
     {
         yield return new WaitForSeconds(1.5f);
 
-        GameManager.instance.SpawnNextCube();
+        if (lost || finalized)
+            yield break;
+
+        finalized = true;
+
+        GameManager.instance.AddPlacedCube();
     }
 
     private void PlaySFXSound()
