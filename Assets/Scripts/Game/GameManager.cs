@@ -116,9 +116,11 @@ public class GameManager : MonoBehaviour
     {
         cubesPlaced++;
 
+        OnCubesPlacedChanged?.Invoke(cubesPlaced);
+        
         CheckTowerHeight();
 
-        OnCubesPlacedChanged?.Invoke(cubesPlaced);
+        SpawnNextCube();
 
         CheckLevelComplete();
     }
