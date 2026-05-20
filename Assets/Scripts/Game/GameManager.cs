@@ -59,6 +59,7 @@ public class GameManager : MonoBehaviour
     private float gameTime = 0f;
     public int cubesPlaced = 0;
     private int cubesLost = 0;
+    private int cubesToWin = 0;
 
     private bool cubeDropped = false;
 
@@ -260,20 +261,23 @@ public class GameManager : MonoBehaviour
         cubesLost = 0;
         cubesPlaced = 0;
 
+        Debug.Log("Current Level: " + currentLevel);
+        Debug.Log("Levels Count: " + levels.Length); 
+
         LevelManager level = levels[currentLevel];
 
         maxLives = level.maxLives;
 
-        playerSpeed.SetLevelSpeed(level.playerSpeed);
+        cubesToWin = level.cubesToWin;
 
-        LevelManager nextLevel = levels[currentLevel];
+        playerSpeed.SetLevelSpeed(level.playerSpeed);
     }
 
     public void CheckLevelComplete()
     {
         LevelManager level = levels[currentLevel];
 
-        if ((cubesPlaced == level.cubesToWin))
+        if ((cubesPlaced == cubesToWin))
         {
             WinGame();
         }
