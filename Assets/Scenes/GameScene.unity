@@ -2170,7 +2170,7 @@ GameObject:
   - component: {fileID: 450170001}
   - component: {fileID: 450170000}
   m_Layer: 5
-  m_Name: ReplayButton
+  m_Name: NextLevelButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2256,7 +2256,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1802299139}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: ReplayGame
+        m_MethodName: NextLevel
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2567,7 +2567,7 @@ GameObject:
   - component: {fileID: 619312858}
   - component: {fileID: 619312857}
   m_Layer: 5
-  m_Name: ReplayText
+  m_Name: nextLevelText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2612,7 +2612,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Replay
+  m_text: 'Next level
 
 '
   m_isRightToLeft: 0
